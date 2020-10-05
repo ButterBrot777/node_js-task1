@@ -1,35 +1,28 @@
-const argvSlice = require('minimist')(process.argv.slice(2));
-const argv = require('minimist')(process.argv);
-console.log('argvSlice: ', argvSlice);
-console.log('argv: ', argv);
+const { pipeline } = require('stream');
+const fs = require('fs');
+const options = require('./arguments');
 
-const str = 'abc';
-const shift = argv.a;
+const { readStream } = require('./streams');
+const { writeStream } = require('./streams');
+const { transformStream } = require('./streams');
 
-console.log('shift: ', shift, typeof shift, argv.x);
+if (options.i) {
+	fs.promises.access(options.i, fs.constants.F_OK | fs.constants.R_OK).catch(err => {
+		process.stderr.write(`File ${options.i} ${err.code === 'ENOENT' ? 'does not exist' : 'can not read'}`);
+		process.exit(200);
+	});
+}
 
-const caesarShift = (str, shift) => {
-  if (shift < 0) {
-    return caesarShift(str, shift + 26);
-  }
+if (options.o) {
+	fs.promises.access(options.o, fs.constants.F_OK | fs.constants.W_OK).catch(err => {
+		process.stderr.write(`File ${options.o} ${err.code === 'ENOENT' ? 'does not exist' : 'can not write'}`);
+		process.exit(200);
+	});
+}
 
-  let output = '';
-
-  for (let i = 0; i < str.length; i++) {
-    let letter = str[i];
-
-    if (letter.match(/[a-z]/i)) {
-      const code = str.charCodeAt(i);
-
-      if (code >= 65 && code <= 90) {
-        letter = String.fromCharCode(((code - 65 + shift) % 26) + 65);
-      } else if (code >= 97 && code <= 122) {
-        letter = String.fromCharCode(((code - 97 + shift) % 26) + 97);
-      }
-    }
-    output += letter;
-  }
-  console.log('output: ', output);
-  return output;
-};
-caesarShift(str, shift);
+pipeline(readStream, transformStream, writeStream, err => {
+	if (err) {
+		console.log(err.message);
+	}
+	console.log('secret data was written');
+});
