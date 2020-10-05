@@ -1,4 +1,4 @@
-# RS School REST service
+# RS School Caesar Cipher CLI
 
 ## Prerequisites
 
@@ -19,54 +19,24 @@ npm install
 
 ## Running application
 
+To run the app you must be in folder ***./node_js-task1*** and write `node my_caesar_cli.js` and add options.
+
+This application accepts several options as input in the command line:
 ```
-npm start
+-a,--action - write "encode" or "decode";
+-s,--shift - write shift when encrypting or decrypting;
+-i,--input - choose the file from which to read a secret message: -i input.txt;
+-o,--output - select the file in which you want to write the results of the program -o output.txt
 ```
+Parameters **action** and **shift** are mandatory.
+Parameters **input** and **output** are optional.
 
-After starting the app on port (4000 as default) you can open
-in your browser OpenAPI documentation by typing http://localhost:4000/doc/.
-For more information about OpenAPI/Swagger please visit https://swagger.io/.
 
-## Testing
-
-After application running open new terminal and enter:
-
-To run all tests without authorization
-
-```
-npm test
-```
-
-To run only one of all test suites (users, boards or tasks)
+## Examples
 
 ```
-npm test <suite name>
+node my_caesar_cli.js -s 3 -a encode
+node my_caesar_cli.js -s 3 -a encode -i ./input.txt
+node my_caesar_cli.js -s 3 -a encode -i ./input.txt -o ./output.txt
+node my_caesar_cli.js -s 3 -a decode
 ```
-
-To run all test with authorization
-
-```
-npm run test:auth
-```
-
-To run only specific test suite with authorization (users, boards or tasks)
-
-```
-npm run test:auth <suite name>
-```
-
-## Development
-
-If you're using VSCode, you can get a better developer experience from integration with [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) and [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) extensions.
-
-### Auto-fix and format
-
-```
-npm run lint
-```
-
-### Debugging in VSCode
-
-Press <kbd>F5</kbd> to debug.
-
-For more information, visit: https://code.visualstudio.com/docs/editor/debugging
