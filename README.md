@@ -19,7 +19,7 @@ npm install
 
 ## Running application
 
-To run the app you must be in folder ***./node_js-task1*** and write `node my_caesar_cli.js` and add options.
+To run the app you must be in folder ***./node_js-task1/src*** and write `node my_caesar_cli.js` and add options.
 
 This application accepts several options as input in the command line:
 ```
@@ -35,8 +35,10 @@ Parameters **input** and **output** are optional.
 ## Examples
 
 ```
-node my_caesar_cli.js -s 3 -a encode
-node my_caesar_cli.js -s 3 -a encode -i ./input.txt
-node my_caesar_cli.js -s 3 -a encode -i ./input.txt -o ./output.txt
-node my_caesar_cli.js -s 3 -a decode
+node src/my_caesar_cli.js -s 3 -a encode
+node src/my_caesar_cli.js -s 3 -a encode -i "src/input.txt"
+node src/my_caesar_cli.js -s 3 -a encode -i ./input.txt -o ./output.txt
+node src/my_caesar_cli.js -s 3 -a decode
+node src/my_caesar_cli.js -a encode -s 2 -i "src/input.txt" -o "src/output.txt"
+
 ```
